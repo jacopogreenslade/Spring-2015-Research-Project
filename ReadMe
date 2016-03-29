@@ -1,5 +1,8 @@
 This is the working project for the Oculus game for Spring 2016.
 
+IMPORTANT!!!! TO COMMIT CHANGES, YOU MUST CLOSE UNITY AND VISUAL STUDIO, 
+AS WELL AS ANYTHING USING FILES YOU WISH TO COMMIT!!!
+
 TO DO:
   Key Items:
     When holding correct key item, activating a locked item does:
