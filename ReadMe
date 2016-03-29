@@ -1,0 +1,41 @@
+This is the working project for the Oculus game for Spring 2016.
+
+TO DO:
+  Key Items:
+    When holding correct key item, activating a locked item does:
+      Unlock item
+      Remove key from inventory (if that was it's only use)
+      
+  Locked item:
+    When unlocked it should:
+      Display notice
+      Activate
+
+  Inventory:
+    Remake inventory with Unity.UI
+  
+    Destroy item when it's added
+    Object type: key, tool, weapon
+    Object type icon
+    Pin button
+    Inventory quantity limit
+    Scrollable list
+    Display description on select
+    Optional:
+      resize item entry when there are < x
+    
+  Dashboard:
+    Add remove (Pin, Unpin)
+    Write and paste notes
+    Position Objects
+    Object transparancy
+    Transparent sphere with visible edges (like map lines)
+
+DONE:
+  Inventory:
+    Object Database
+    GUI
+    Instantiate object on equip
+    Suspend movement on open inventory
+    Add GameObjects by clicking on them
+    Display icon
