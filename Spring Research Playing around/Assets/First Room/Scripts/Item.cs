@@ -6,7 +6,9 @@ public class Item {
 		
 	public string name;
 	public int id;
-	public GameObject obj;
+  public bool selected;
+  public bool equipped;
+  public GameObject obj;
 	public string description;
 	public Texture2D icon;
 
