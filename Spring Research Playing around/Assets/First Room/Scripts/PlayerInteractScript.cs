@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class PlayerInteractScript : MonoBehaviour {
 
 	public Image dot;
-
+  public ItemInventory inventory;
 	private Transform cam;
 
 	// Use this for initialization
@@ -23,17 +23,20 @@ public class PlayerInteractScript : MonoBehaviour {
 		
 		// Look at section
 		GameObject hitObj = castPointAtRay();
-		if (hitObj != null && hitObj.GetComponent<ItemScript>() != null) {
-			ItemScript script = hitObj.GetComponent<ItemScript>();
+		if (hitObj != null && hitObj.tag == "Pickup") {
+			//ItemScript script = hitObj.GetComponent<ItemScript>();
 			dot.color = Color.black;
-			if (script.isInteractive()) {
-				if (Input.GetMouseButtonDown(0)) {
-					Interact(script);
-				}
-				dot.color = Color.green;
-			} else {
+      if (Input.GetMouseButtonDown(0)) {
+        inventory.addItemFromGameObject(hitObj);
+      }
+			//if (script.isInteractive()) {
+			//	if (Input.GetMouseButtonDown(0)) {
+			//		Interact(script);
+			//	}
+			//	dot.color = Color.green;
+			//} else {
 				
-			}
+			//}
 			
 		}
 
@@ -42,7 +45,6 @@ public class PlayerInteractScript : MonoBehaviour {
 
 	void Interact (ItemScript script) {
 		script.Interact();
-
 	}
 
 	/**
