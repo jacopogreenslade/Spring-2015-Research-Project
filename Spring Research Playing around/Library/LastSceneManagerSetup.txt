@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/First Room/InventoryTest.unity
+- path: Assets/First Room/FirstRoom.unity
   isLoaded: 1
   isActive: 1

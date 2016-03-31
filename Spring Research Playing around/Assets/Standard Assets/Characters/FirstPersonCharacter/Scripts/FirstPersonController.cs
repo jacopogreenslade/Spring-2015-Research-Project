@@ -45,6 +45,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private bool m_Jumping;
 		private AudioSource m_AudioSource;
 
+    // My added code
+    private bool movementSuspended = false;
+
 		// Use this for initialization
 		private void Start ()
 		{
@@ -60,10 +63,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init (transform, m_Camera.transform);
 		}
 
+    public void suspendMovement () {
+      movementSuspended = true;
+    }
 
-		// Update is called once per frame
-		private void Update ()
+    public void activateMovement () {
+      movementSuspended = false;
+    }
+
+    // Update is called once per frame
+    private void Update ()
 		{
+      if (movementSuspended) {
+        return;
+      }
+
 			RotateView ();
 			// the jump state needs to read here to make sure it is not missed
 			if (!m_Jump) {
