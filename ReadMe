@@ -15,9 +15,9 @@ TO DO:
       Activate
 
   Inventory:
-    Remake inventory with Unity.UI
+    Select items with mouse(Add on click to selectImage by making it a button?)
   
-    Destroy item when it's added
+
     Object type: key, tool, weapon
     Object type icon
     Pin button
@@ -42,3 +42,8 @@ DONE:
     Suspend movement on open inventory
     Add GameObjects by clicking on them
     Display icon
+    Remake inventory with Unity.UI
+    Key navigation
+    Select item
+    Multiple item
+    Destroy item when it's added
