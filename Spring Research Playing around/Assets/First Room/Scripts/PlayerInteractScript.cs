@@ -27,7 +27,7 @@ public class PlayerInteractScript : MonoBehaviour
 		GameObject hitObj = castPointAtRay ();
 		if (hitObj != null && hitObj.tag == "Pickup") {
 			//ItemScript script = hitObj.GetComponent<ItemScript>();
-			dot.color = Color.black;
+			//dot.color = Color.black;
 			if (Input.GetMouseButtonDown (0)) {
 				// This is where you add an item
 				if (inventory.pickUpItem (hitObj)) {
