@@ -33,7 +33,7 @@ public class PlayerInteractScript : MonoBehaviour
 				if (inventory.pickUpItem (hitObj)) {
 					GameObject.Destroy(hitObj);
 					// TODO: Display something
-				};
+				}
 
 			}
 		}
@@ -60,7 +60,7 @@ public class PlayerInteractScript : MonoBehaviour
 	{
 		RaycastHit hit;
 		Ray ray = Camera.main.ViewportPointToRay (new Vector3 (0.5f, 0.5f, 0f));
-		if (Physics.Raycast (ray, out hit, 1f)) {
+		if (Physics.Raycast (ray, out hit, 5f)) {
 			return hit.transform.gameObject;
 		}
 		return null;
