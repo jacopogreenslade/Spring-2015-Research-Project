@@ -37,6 +37,11 @@ public class PlayerInteractScript : MonoBehaviour
 
 			}
 		}
+		// Redo of the interact method
+		if (hitObj != null && hitObj.tag == "Interactive" && Input.GetMouseButtonDown (0)) {
+			hitObj.GetComponent<InteractiveInterface>().interact();
+			Debug.Log("Interacted");
+		}
 
 	}
 
