@@ -1,6 +1,6 @@
 This is the working project for the Oculus game for Spring 2016.
 
-IMPORTANT!!!! TO COMMIT CHANGES, YOU MUST CLOSE UNITY AND VISUAL STUDIO, 
+IMPORTANT!!!! TO COMMIT CHANGES, YOU MUST CLOSE UNITY AND VISUAL STUDIO/MonoDevelop, 
 AS WELL AS ANYTHING USING FILES YOU WISH TO COMMIT!!!
 
 TO DO:
@@ -13,11 +13,14 @@ TO DO:
     When unlocked it should:
       Display notice
       Activate
+      
+  Message System
+    Have static class you can call to display messages
 
   Inventory:
-    Select items with mouse(Add on click to selectImage by making it a button?)
-  
-
+    Redraw elements
+    Equip instead of destroying
+    don't just add all elements from the db
     Object type: key, tool, weapon
     Object type icon
     Pin button
@@ -47,3 +50,9 @@ DONE:
     Select item
     Multiple item
     Destroy item when it's added
+    Select items with mouse(Add on click to selectImage by making it a button?)
+    
+  Binary World
+    Platforms
+    Textures
+    Switch 0 and 1
