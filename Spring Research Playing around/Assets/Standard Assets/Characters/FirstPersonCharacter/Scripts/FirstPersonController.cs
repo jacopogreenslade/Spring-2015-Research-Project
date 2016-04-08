@@ -45,8 +45,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private bool m_Jumping;
 		private AudioSource m_AudioSource;
 
-    // My added code
-    private bool movementSuspended = false;
+		// My added code
+		private bool movementSuspended = false;
 
 		// Use this for initialization
 		private void Start ()
@@ -63,20 +63,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init (transform, m_Camera.transform);
 		}
 
-    public void suspendMovement () {
-      movementSuspended = true;
-    }
-
-    public void activateMovement () {
-      movementSuspended = false;
-    }
-
-    // Update is called once per frame
-    private void Update ()
+		public void suspendMovement ()
 		{
-      if (movementSuspended) {
-        return;
-      }
+			movementSuspended = true;
+		}
+
+		public void activateMovement ()
+		{
+			movementSuspended = false;
+		}
+
+		// Update is called once per frame
+		private void Update ()
+		{
+			if (movementSuspended) {
+				return;
+			}
 
 			RotateView ();
 			// the jump state needs to read here to make sure it is not missed
@@ -119,9 +121,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				m_CharacterController.height / 2f);
 			desiredMove = Vector3.ProjectOnPlane (desiredMove, hitInfo.normal).normalized;
 
-			m_MoveDir.x = desiredMove.x * speed;
-			m_MoveDir.z = desiredMove.z * speed;
-
+			if (m_CharacterController.isGrounded) {
+				m_MoveDir.x = desiredMove.x * speed;
+				m_MoveDir.z = desiredMove.z * speed;
+			}
 
 			if (m_CharacterController.isGrounded) {
 				m_MoveDir.y = -m_StickToGroundForce;
@@ -135,6 +138,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			} else {
 				m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
 			}
+
 			m_CollisionFlags = m_CharacterController.Move (m_MoveDir * Time.fixedDeltaTime);
 
 			ProgressStepCycle (speed);
