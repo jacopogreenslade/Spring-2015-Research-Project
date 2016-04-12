@@ -11,8 +11,11 @@ public class PressScript : MonoBehaviour
 	private Material mat;
 	private float lastTime;
 
-	// Use this for initialization
-	void Start ()
+  private float offXRot = 294.0f;
+  private float onXRot = 243.0f;
+
+  // Use this for initialization
+  void Start ()
 	{
 		active = false;
 		mat = GetComponent<Renderer> ().material;
@@ -47,9 +50,17 @@ public class PressScript : MonoBehaviour
 		}
 	}
 
+  private void toggleRotation () {
+    if (active) {
+      transform.localEulerAngles = new Vector3(onXRot, 0f, 0f);
+    } else {
+      transform.localEulerAngles = new Vector3(offXRot, 0f, 0f);
+    }
+    }
+
 	// This should fix the circular call issue
 	public void toggleActive() {
 		active = !active;
-		updateColor();
+		toggleRotation();
 	}
 }
