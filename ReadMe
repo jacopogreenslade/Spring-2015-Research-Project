@@ -9,10 +9,17 @@ TO DO:
       Unlock item
       Remove key from inventory (if that was it's only use)
       
+  Binary World
+    Connect terminal to binary world when clicked
+      
   Locked item:
     When unlocked it should:
       Display notice
       Activate
+      
+  Switch Puzzle
+    Fix error null reference
+    Make it do something if you get it right
       
   Message System
     Have static class you can call to display messages
@@ -27,8 +34,6 @@ TO DO:
     Inventory quantity limit
     Scrollable list
     Display description on select
-    Optional:
-      resize item entry when there are < x
     
   Dashboard:
     Add remove (Pin, Unpin)
@@ -56,3 +61,6 @@ DONE:
     Platforms
     Textures
     Switch 0 and 1
+  
+  Switch Puzzle
+    Code and models
