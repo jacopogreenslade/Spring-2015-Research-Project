@@ -36,7 +36,7 @@ public class ItemInventory : MonoBehaviour
 		canvasTransform.gameObject.SetActive (false);
 		firstItemPosition = new Vector3 (canvasTransform.position.x, canvasTransform.position.y + initialOffset, canvasTransform.position.z);
 		lastItemPosition = firstItemPosition;
-		makeButtons ();
+		drawInventory ();
 		selected = 0;
 	}
 
@@ -59,10 +59,11 @@ public class ItemInventory : MonoBehaviour
 			addItem (items [0]);
 		}
 			
-		drawSelection(handleSelection());
+		drawSelection (handleSelection ());
 	}
 	// Returns false unless a change has occured
-	bool handleSelection() {
+	bool handleSelection ()
+	{
 		if (Input.GetKeyDown (KeyCode.UpArrow) && Time.time - lastTime > .1f && selected > 0) {
 			selected--;
 			return true;
@@ -73,121 +74,146 @@ public class ItemInventory : MonoBehaviour
 		return false;
 	}
 
-	void drawSelection(bool changed) {
+	void drawSelection (bool changed)
+	{
 		if (changed) {
-      // This way you can call it from anywhere.
-      selectionImage.GetComponent<SelectPositionScript>().positionOverItem(objects[selected]);
+			// This way you can call it from anywhere.
+			selectionImage.GetComponent<SelectPositionScript> ().positionOverItem (objects [selected]);
 		}
 	}
 
-	void makeButtons ()
-	{
-		for (int i = 0; i < items.Count; i++) {
-			addItem (items [i]);
-		}
-	}
 	/**
 	* Returns true if successful pickup and false if not
 	*/
 	public bool pickUpItem (GameObject obj)
 	{
-		addItem (items [obj.GetComponent<DatabaseID> ().id]);
+		items.Add (items [obj.GetComponent<DatabaseID> ().id]);
+		drawInventory ();
 		// TODO: in case it goes wrong return false
 		return true;
+	}
+
+	// Loops through the items currently in the inventory list and
+	// displays them
+	public void drawInventory ()
+	{
+		// Reset all fields before drawing new inventory
+		foreach(GameObject o in objects) {
+			o.transform.parent = null;
+			GameObject.Destroy(o);
+		}
+		objects.Clear ();
+		objects = new List<GameObject> ();
+		lastItemPosition = firstItemPosition;
+		selected = 0;
+		//drawSelection(true);
+		foreach (Item i in items) {
+			addItem (i);
+		}
 	}
 
 	void addItem (Item i)
 	{
 		// Check if there already is a similar object
 		Transform child = canvasTransform.FindChild (i.name);
-		if (child != null) {
+		if (child != null && child.Equals(null)) {
 			child.GetComponent<UI_Item> ().createItem (i);
 		} else {
 			// First time creation
 			GameObject button = (GameObject)GameObject.Instantiate (buttonAsset, lastItemPosition, canvasTransform.rotation);
 			button.name = i.name;
-			button.transform.parent = canvasTransform;
+			button.transform.SetParent(canvasTransform);
+			// When you assign a child it scales to the parent. To fix this set the scale to 1
+			button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 			button.GetComponent<UI_Item> ().createItem (i);
-			objects.Add(button);
+			objects.Add (button);
 			lastItemPosition.y -= buttonOffset; // TODO: this line assumes the last position is correct. Not ok
 		}
 	}
 
-	void dropItem() {
-		
+	void dropItem (Item i)
+	{
+		Transform child = canvasTransform.FindChild (i.name);
+		if (child != null) {
+			child.GetComponent<UI_Item> ().removeItem (i);
+			drawInventory ();
+		}
 	}
 
-  public void setSelected (int i) {
-    selected = i;
-  }
+	public void setSelected (int i)
+	{
+		selected = i;
+	}
 
-  // This is for when you don't know the index
-  public void setSelected (GameObject item) {
-    selected = objects.IndexOf(item);
-  }
+	// This is for when you don't know the index
+	public void setSelected (GameObject item)
+	{
+		selected = objects.IndexOf (item);
+	}
 
-  public int getSelected () {
-    return selected;
-  }
+	public int getSelected ()
+	{
+		return selected;
+	}
 
-  //	void OnGUI ()
-  //	{
-  //		// Make container
-  //		if (displayInventory) {
-  //			player.GetComponent<FirstPersonController> ().suspendMovement ();
-  //			GUI.skin.box.padding = new RectOffset (4, 4, 4, 4);
-  //			GUI.skin.box.margin = new RectOffset (4, 4, 4, 4);
-  //			GUI.skin.button.alignment = TextAnchor.MiddleLeft;
-  //			GUI.Box (new Rect (10, 10, Screen.width - 10, Screen.height - 10), "Inventory");
-  //			for (int i = 0; i < items.Count; i++) {
-  //				int y = i * 22 + 34 + i * 20;
-  //				Rect r = new Rect (20, y, Screen.width - 170, 30);
-  //
-  //				createItemButtons (y, i);
-  //				if (GUI.Button (r, items [i].name)) {
-  //					Debug.Log ("The " + items [i].name + " was pressed!");
-  //				}
-  //			}
-  //		} else {
-  //			player.GetComponent<FirstPersonController> ().activateMovement ();
-  //		}
-  //	}
-  //
-  //	public void addItemFromGameObject (GameObject obj)
-  //	{
-  //		// Find right item in ItemDatabase
-  //		// Then add it
-  //		int id = obj.GetComponent<DatabaseID> ().id;
-  //		items.Add (database.items [id]);
-  //	}
-  //
-  //	// Makes the small square buttons on items
-  //	private void createItemButtons (int y, int index)
-  //	{
-  //		// Remove item
-  //		if (GUI.Button (new Rect (Screen.width - 35, y, 25, 30), "X")) {
-  //			if (items [index].instance != null) {
-  //				Destroy (items [index].instance, 0f);
-  //			}
-  //			items.RemoveAt (index);
-  //		}
-  //		// Equip item
-  //		GUI.DrawTexture (new Rect (Screen.width - 150, y - 5, 45, 45), items [index].icon);
-  //
-  //		Rect r = new Rect (Screen.width - 105, y, 70, 30);
-  //		if (!items [index].equipped) {
-  //			if (GUI.Button (r, "Equip")) {
-  //				items [index].equipped = true;
-  //				if (items [index].asset)
-  //					items [index].instance = (GameObject)Instantiate (items [index].asset, equipTarget.position, equipTarget.rotation);
-  //
-  //			}
-  //		} else {
-  //			if (GUI.Button (r, "Equipped")) {
-  //				items [index].equipped = false;
-  //				Destroy (items [index].instance, 0f);
-  //			}
-  //		}
-  //	}
+	//	void OnGUI ()
+	//	{
+	//		// Make container
+	//		if (displayInventory) {
+	//			player.GetComponent<FirstPersonController> ().suspendMovement ();
+	//			GUI.skin.box.padding = new RectOffset (4, 4, 4, 4);
+	//			GUI.skin.box.margin = new RectOffset (4, 4, 4, 4);
+	//			GUI.skin.button.alignment = TextAnchor.MiddleLeft;
+	//			GUI.Box (new Rect (10, 10, Screen.width - 10, Screen.height - 10), "Inventory");
+	//			for (int i = 0; i < items.Count; i++) {
+	//				int y = i * 22 + 34 + i * 20;
+	//				Rect r = new Rect (20, y, Screen.width - 170, 30);
+	//
+	//				createItemButtons (y, i);
+	//				if (GUI.Button (r, items [i].name)) {
+	//					Debug.Log ("The " + items [i].name + " was pressed!");
+	//				}
+	//			}
+	//		} else {
+	//			player.GetComponent<FirstPersonController> ().activateMovement ();
+	//		}
+	//	}
+	//
+	//	public void addItemFromGameObject (GameObject obj)
+	//	{
+	//		// Find right item in ItemDatabase
+	//		// Then add it
+	//		int id = obj.GetComponent<DatabaseID> ().id;
+	//		items.Add (database.items [id]);
+	//	}
+	//
+	//	// Makes the small square buttons on items
+	//	private void createItemButtons (int y, int index)
+	//	{
+	//		// Remove item
+	//		if (GUI.Button (new Rect (Screen.width - 35, y, 25, 30), "X")) {
+	//			if (items [index].instance != null) {
+	//				Destroy (items [index].instance, 0f);
+	//			}
+	//			items.RemoveAt (index);
+	//		}
+	//		// Equip item
+	//		GUI.DrawTexture (new Rect (Screen.width - 150, y - 5, 45, 45), items [index].icon);
+	//
+	//		Rect r = new Rect (Screen.width - 105, y, 70, 30);
+	//		if (!items [index].equipped) {
+	//			if (GUI.Button (r, "Equip")) {
+	//				items [index].equipped = true;
+	//				if (items [index].asset)
+	//					items [index].instance = (GameObject)Instantiate (items [index].asset, equipTarget.position, equipTarget.rotation);
+	//
+	//			}
+	//		} else {
+	//			if (GUI.Button (r, "Equipped")) {
+	//				items [index].equipped = false;
+	//				Destroy (items [index].instance, 0f);
+	//			}
+	//		}
+	//	}
 
 }
