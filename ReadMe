@@ -11,10 +11,16 @@ TO DO:
       
   Binary World
     Connect terminal to binary world when clicked
+    Final platform sequence that leads to exit
+    Think of a good pickup too
       
-  
   Main Room
-    Add textures to assets or you can't make the materials
+    The room is too big, scale it to about 1/4th of what it is. (minus the hallway)
+    Fill with stuff!!! 1 thing at the time. 
+      Desk clutter: mug, monitor, keyboard, pens and pencils, various papers.
+      Indoor plants.
+      Tall metal shelves and low wooden shelves.
+      Books that you can copy and reorganize.
   
   Locked item:
     When unlocked it should:
@@ -45,6 +51,9 @@ TO DO:
     Transparent sphere with visible edges (like map lines)
 
 DONE:
+  Main Room
+    Add textures to assets or you can't make the materials
+    
   Inventory:
     Object Database
     GUI
