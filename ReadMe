@@ -29,13 +29,11 @@ TO DO:
     Have static class you can call to display messages
 
   Inventory:
-    Redraw elements
     Equip instead of destroying
     don't just add all elements from the db
     Object type: key, tool, weapon
     Object type icon
     Pin button
-    Inventory quantity limit
     Scrollable list
     Display description on select
     
@@ -60,6 +58,7 @@ DONE:
     Multiple item
     Destroy item when it's added
     Select items with mouse(Add on click to selectImage by making it a button?)
+    Redraw elements
     
   Binary World
     Platforms
