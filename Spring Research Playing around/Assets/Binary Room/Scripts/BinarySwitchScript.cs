@@ -15,7 +15,6 @@ public class BinarySwitchScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log("Started");
 		lastTime = Time.time;
 		rend = GetComponent<Renderer>();
 		boxColl = GetComponent<BoxCollider>();

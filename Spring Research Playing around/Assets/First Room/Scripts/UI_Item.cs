@@ -65,7 +65,7 @@ public class UI_Item : MonoBehaviour
 			invScript.items.Remove(item);
 			invScript.drawInventory();
 			// make a redraw functions
-			GameObject.Destroy (this.gameObject);
+			//GameObject.Destroy (this.gameObject);
 			GameObject.Instantiate(item.asset, Camera.main.transform.position + new Vector3(-2, 0, 0), Camera.main.transform.rotation);
 		}
 	}

@@ -11,6 +11,7 @@ public class ItemInventory : MonoBehaviour
 	public List<GameObject> objects = new List<GameObject> ();
 	public Transform equipTarget;
 	public Transform canvasTransform;
+	public Transform initialPosition;
 	public Object buttonAsset;
 	public int initialOffset = 140;
 	public float buttonOffset = 10f;
@@ -21,9 +22,8 @@ public class ItemInventory : MonoBehaviour
 	private ItemDatabase database;
 	private bool displayInventory = false;
 	private int firstItemHeight;
-	private Vector3 lastItemPosition;
-	private float lastItemHeigth;
 	private Vector3 firstItemPosition;
+	private Vector3 lastItemPosition;
 	private float lastTime;
 
 	void Start ()
@@ -34,7 +34,7 @@ public class ItemInventory : MonoBehaviour
 		}
 		lastTime = Time.time;
 		canvasTransform.gameObject.SetActive (false);
-		firstItemPosition = new Vector3 (canvasTransform.position.x, canvasTransform.position.y + initialOffset, canvasTransform.position.z);
+		firstItemPosition = initialPosition.position;
 		lastItemPosition = firstItemPosition;
 		drawInventory ();
 		selected = 0;
@@ -51,12 +51,6 @@ public class ItemInventory : MonoBehaviour
 			canvasTransform.gameObject.SetActive (true);
 		} else {
 			canvasTransform.gameObject.SetActive (false);
-		}
-
-		// TEST
-		if (Input.GetKeyDown (KeyCode.Space) && Time.time - lastTime > .1f) {
-			lastTime = Time.time;
-			addItem (items [0]);
 		}
 			
 		drawSelection (handleSelection ());
@@ -97,34 +91,36 @@ public class ItemInventory : MonoBehaviour
 	// displays them
 	public void drawInventory ()
 	{
+		Debug.Log (firstItemPosition);
 		// Reset all fields before drawing new inventory
-		foreach(GameObject o in objects) {
+		foreach (GameObject o in objects) {
 			o.transform.parent = null;
-			GameObject.Destroy(o);
+			GameObject.Destroy (o);
 		}
 		objects.Clear ();
 		objects = new List<GameObject> ();
 		lastItemPosition = firstItemPosition;
 		selected = 0;
-		//drawSelection(true);
 		foreach (Item i in items) {
 			addItem (i);
 		}
+		drawSelection(true);
 	}
 
 	void addItem (Item i)
 	{
 		// Check if there already is a similar object
 		Transform child = canvasTransform.FindChild (i.name);
-		if (child != null && child.Equals(null)) {
+		if (child != null && child.Equals (null)) {
 			child.GetComponent<UI_Item> ().createItem (i);
 		} else {
 			// First time creation
-			GameObject button = (GameObject)GameObject.Instantiate (buttonAsset, lastItemPosition, canvasTransform.rotation);
+			GameObject button = (GameObject)GameObject.Instantiate (buttonAsset, initialPosition.position, canvasTransform.rotation);
 			button.name = i.name;
-			button.transform.SetParent(canvasTransform);
+			button.transform.SetParent (canvasTransform);
+			button.GetComponent<RectTransform> ().position = lastItemPosition;
 			// When you assign a child it scales to the parent. To fix this set the scale to 1
-			button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+			button.GetComponent<RectTransform> ().localScale = new Vector3 (1, 1, 1);
 			button.GetComponent<UI_Item> ().createItem (i);
 			objects.Add (button);
 			lastItemPosition.y -= buttonOffset; // TODO: this line assumes the last position is correct. Not ok
