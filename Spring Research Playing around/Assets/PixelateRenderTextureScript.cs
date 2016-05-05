@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class PixelateRenderTextureScript : MonoBehaviour {
 
 	public bool increase = false;
-	public int startWidth = 256;
-	public int startHeight = 256;
+	//public int startWidth = 256;
+	//public int startHeight = 256;
 	public Object camAsset;
 	public Canvas canvas;
 
@@ -26,7 +26,7 @@ public class PixelateRenderTextureScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Time.time - lastTime > 2 && start) {
+		if (Time.time - lastTime > 1.8 && start) {
 			Debug.Log("Res Change");
 			setNewRenderTexture();
 			lastTime = Time.time;
