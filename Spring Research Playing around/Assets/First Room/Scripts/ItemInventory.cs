@@ -81,6 +81,9 @@ public class ItemInventory : MonoBehaviour
 	*/
 	public bool pickUpItem (GameObject obj)
 	{
+    if (obj.GetComponent<DatabaseID>() == null) {
+      return false;
+    }
 		items.Add (items [obj.GetComponent<DatabaseID> ().id]);
 		drawInventory ();
 		// TODO: in case it goes wrong return false

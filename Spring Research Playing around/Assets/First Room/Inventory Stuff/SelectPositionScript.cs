@@ -8,7 +8,7 @@ public class SelectPositionScript : MonoBehaviour {
     Vector3 newPos = new Vector3(transform.position.x,
         item.transform.position.y,
         item.transform.position.z);
-    transform.position = newPos;
+         transform.position = newPos;
   }
 
 }

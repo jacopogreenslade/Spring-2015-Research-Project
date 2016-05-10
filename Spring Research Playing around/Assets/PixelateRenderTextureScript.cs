@@ -18,9 +18,10 @@ public class PixelateRenderTextureScript : MonoBehaviour {
 	private RenderTexture startTex;
 	private Camera cam;
 	private bool start = false;
+  private RectTransform cT;
 
-	// Use this for initialization
-	void Start () {
+  // Use this for initialization
+  void Start () {
 		
 	}
 
@@ -43,8 +44,11 @@ public class PixelateRenderTextureScript : MonoBehaviour {
 		cam.targetTexture = startTex;
 		lastTime = Time.time;
 		setIncreaseMultiplier();
-		start = true;
-	}
+    cT = canvas.GetComponent<RectTransform>();
+    cT.sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+    start = true;
+    cT.localScale = new Vector3(1, 1, 1);
+  }
 
 	void setNewRenderTexture() {
 		int width = cam.targetTexture.width;
@@ -57,7 +61,8 @@ public class PixelateRenderTextureScript : MonoBehaviour {
 		startTex.filterMode = FilterMode.Point;
 		cam.targetTexture = startTex;
 		image.GetComponent<RawImage>().texture = startTex;
-	}
+    cT.localScale = new Vector3(1f, 1f, 1f);
+  }
 
 	void setIncreaseMultiplier() {
 		if (increase) {

@@ -7,9 +7,10 @@ public class PressScript : MonoBehaviour
 
 	public List<GameObject> switches;
 
-	private bool active;
+	public bool active;
 	private Material mat;
 	private float lastTime;
+  
 
   private float offXRot = 294.0f;
   private float onXRot = 243.0f;
